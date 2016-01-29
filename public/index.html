@@ -1,33 +1,159 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>CSS/HTML Workshop with Drivy</title>
-  </head>
-  <body>
-    <div id="car">
-      <input class="model" type="text" placeholder="Car model"/>
-      <input class="price-by-day" type="number" placeholder="Price by day"/>
-      <input class="price-by-km" type="number" placeholder="Price by km"/>
-    </div>
-    <div id="rental">
-      <input class="begin" type="date" placeholder="Rental begin date"/>
-      <input class="end" type="date" placeholder="Rental end date"/>
-      <input class="distance" type="number" placeholder="Distance in km"/>
-      <input class="option" type="checkbox" placeholder="Deductible option"/>
-    </div>
-    <button id="compute">Compute</button>
-    <div id="actors"></div>
-    <script id="template" type="x-tmpl-mustache">
-      {{#actors}}
-        <div class="actor">
-          <span>{{who}}</span>
-          <span>{{type}}</span>
-          <span>{{amount}}</span>
-        </div>
-      {{/actors}}
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
-    <script src="drivy.js"></script>
-    <script src="index.js"></script>
-  </body>
+	<head>
+	<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	</head>
+	<body>
+	<!-- Uses a transparent header that draws on top of the layout's background -->
+	<!-- Always shows a header, even in smaller screens. -->
+		<div class="mdl-layout mdl-js-layout ">
+		  <header class="mdl-layout__header" style="background-image:url(images/DrivyLOGOF.png);"> <!-- Ici on rajoute un background de type DrivyLOGO-->
+			<div class="mdl-layout__header-row">
+			  <!-- Title -->
+			  <span class="mdl-layout-title"></span> <!-- Dans notre cas nous n'avons plus besoin de mettre de titre.-->
+			  <!-- Add spacer, to align navigation to the right -->
+			  <div class="mdl-layout-spacer"></div>
+			  <!-- Navigation. We hide it in small screens. -->
+			</div>
+		  </header>
+		  <div class="mdl-layout__drawer" style="background:#5882FA">
+			<span class="mdl-layout-title" style="background:#FE2E9A">DRIVY</span>
+			<nav class="mdl-navigation" style="background:#5882FA">
+			  <a class="mdl-navigation__link" href="">Link1</a>
+			  <a class="mdl-navigation__link" href="">Link2</a>
+			  <a class="mdl-navigation__link" href="">Link3</a>
+			  <a class="mdl-navigation__link" href="">Link4</a>
+			</nav>
+		  </div>
+  
+  <!-- Début du Main dans le body, notre main page.-->
+		  <main class="mdl-layout__content">
+			<div class="page-content">
+			
+			
+			<!-- Première partie de la Grille : Text - Num - Num -->
+	<div class="mdl-grid">
+	
+		<div class="mdl-cell mdl-cell--4-col"><h2>Car Informations :</h2></div>
+			<div class="mdl-cell mdl-cell--4-col" id="car">
+			
+			<!-- Simple Textfield Car Model div class id="car"-->
+				<form action="#">
+					<div class="mdl-textfield mdl-js-textfield">
+					<input class="mdl-textfield__input model" type="text" id="model">
+					<label class="mdl-textfield__label" for="model">Car Model</label>
+					</div>
+				</form>
+
+<!-- Numeric Textfield Price by Day-->
+				<form action="#">
+					<div class="mdl-textfield mdl-js-textfield"> <!-- Ne pas oublier dans class de mettre notre référence de Drivy.js : "price-by-day" -->
+					<input class="mdl-textfield__input price-by-day" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="price-by-day">
+					<label class="mdl-textfield__label" for="price-by-day">Price By Day</label>
+					<span class="mdl-textfield__error">Input is not a number!</span>
+					</div>
+				</form> 
+
+<!-- Numeric Textfield Price by Km-->
+				<form action="#">
+					<div class="mdl-textfield mdl-js-textfield">
+					<input class="mdl-textfield__input price-by-km" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="price-by-km">
+					<label class="mdl-textfield__label" for="price-by-km">Price By Km</label>
+					<span class="mdl-textfield__error">Input is not a number!</span>
+					</div>
+				</form>
+
+
+			  <!--<input class="model" type="text" placeholder="Car model"/>
+			  <input class="price-by-day" type="number" placeholder="Price by day"/>
+			  <input class="price-by-km" type="number" placeholder="Price by km"/>-->
+			</div>
+			<!-- Fin id="car" div> -->
+			
+			<!-- début de la division image 1 -->
+			<div class="mdl-cell mdl-cell--4-col">
+			<center><img src="images/voitures.jpg"></center>
+			</div>
+			<!-- Fin de la division image 1 -->
+	</div>
+			<!-- Fin de la première grille -->
+			
+			<!--Deuxième partie de la Grille : Date - Date - Number - Checkbox (Juste une petite case à cocher.) -->
+	<div class="mdl-grid">
+		<div class="mdl-cell mdl-cell--4-col"><h2>Rental Informations : </h2></div>
+			<div class="mdl-cell mdl-cell--4-col" id="rental">
+			  <input class="begin" type="date" placeholder="Rental begin date"/>
+			  <br />
+			  <br />
+			  <input class="end" type="date" placeholder="Rental end date"/>
+			  <br />
+			  
+			  <!-- Numeric Textfield Distance-->
+				<form action="#">
+					<div class="mdl-textfield mdl-js-textfield"> <!-- Ne pas oublier dans class de mettre notre référence de Drivy.js : "price-by-day" -->
+					<input class="mdl-textfield__input distance" type="number" pattern="-?[0-9]*(\.[0-9]+)?" id="distance">
+					<label class="mdl-textfield__label" for="distance">Distance in Km</label>
+					<span class="mdl-textfield__error">Input is not a number!</span>
+					</div>
+				</form> 
+			 <!-- <input class="distance" type="number" placeholder="Distance in km"/> -->
+			  
+			  
+			  <input class="option" type="checkbox" placeholder="Deductible option"/>
+			</div>
+			
+			<div class="mdl-cell mdl-cell--4-col">
+			<center><img src="images/thumbup.png"></center>
+			</div>
+	</div>
+	 <br />
+	  <br />
+			<!-- Colored raised button -->
+			<center><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="compute" style="background:#01DF01">
+			  Compute
+			</button></center>			
+			
+			<div id="actors"></div>
+			<script id="template" type="x-tmpl-mustache">
+			  {{#actors}}
+				<div class="actor">
+				  <span>{{who}}</span>
+				  <span>{{type}}</span>
+				  <span>{{amount}}</span>
+				</div>
+			  {{/actors}}
+			</script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+			<script src="drivy.js"></script>
+			<script src="index.js"></script>
+			
+			
+			</div>
+		  </main>
+			<footer class="mdl-mini-footer"> <!-- Bien placé le footer ici si on veut que le footer touche le fin de page. -->
+				<!-- Ici la partie de gauche de notre footer -->
+				<div class="mdl-mini-footer__left-section">
+					<div class="mdl-logo">Title</div>
+						<ul class="mdl-mini-footer__link-list">
+							<li><a href="#">Help</a></li>
+							<li><a href="#">Privacy & Terms</a></li>
+						</ul>
+				</div>
+				<!-- Test pour mettre du texte au milieu, mais ne fonctionne qu'avec des mega footer
+				<div class="mdl-mini-footer__middle-section">
+				<div class="mdl-logo">TOURAILLE Pierre-Ugo <div>
+				</div> 
+				Nénmoins après recherche on aurait pu mettre mon nom et prnom au milieu du footer, mais cela ne rendait aps très bien à l'aide de la balise <center> </center> appliquée à la zone de texte.-->
+  
+				<!-- Ici la partie de droite de notre footer -->
+				<div class="mdl-mini-footer__right-section">
+					<div class="mdl-logo">TOURAILLE Pierre-Ugo </div>
+				</div>
+  
+			</footer>
+		</div>
+	</body>
+	
 </html>
